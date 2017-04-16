@@ -129,7 +129,41 @@ class Test(TestCase):
         self.assertEqual(coordinates['longitude'], -83.9871)
 
 
+    def test_fort_oglethorpe(self):
+        line = """'|coordinates = 34\xc2\xb056\xe2\x80\xb258.75\xe2\x80\xb3N 85\xc2\xb015\xe2\x80\xb210.66\xe2\x80\xb3W\n'"""
+        coordinates = extract_coordinates(line, debug=True)
+        self.assertEqual(coordinates['latitude'], 34.5299)
+        self.assertEqual(coordinates['longitude'], -83.9871)
 
+    def test_cut_knife(self):
+        line = """'{{Coord|display=title|name=Cut Knife, Saskatchewan|52|45|N|109|01|W|region:CA_type:city}}\n'"""
+        coordinates = extract_coordinates(line, debug=True)
+        self.assertEqual(coordinates['latitude'], 34.5299)
+        self.assertEqual(coordinates['longitude'], -83.9871)
+
+    def test_new_south_wales(self):
+        line = '|coordinates = {{coord|32|S|147|E}}\n'
+        coordinates = extract_coordinates(line, debug=True)
+        self.assertEqual(coordinates['latitude'], -32)
+        self.assertEqual(coordinates['longitude'], 147)
+
+    def test_st_johns(self):
+        line = '{{Coord|display=title|name=Truro|43|38|23|N|79|25|57.3|W|type:landmark_region:CA-ON}}\n'
+        coordinates = extract_coordinates(line, debug=True)
+        self.assertEqual(coordinates['latitude'], -32)
+        self.assertEqual(coordinates['longitude'], 147)
+
+    def test_fort_hunter(self):
+        line = '|coordinates = {{coord|35.952226|N|121.23065|W}}&lt;ref&gt;{{gnis|2512470|Fort Hunter Liggett}}&lt;/ref&gt;\n'
+        coordinates = extract_coordinates(line, debug=True)
+        self.assertEqual(coordinates['latitude'], -32)
+        self.assertEqual(coordinates['longitude'], 147)
+
+    def test_peyto_glacier(self):
+        line = '{{Coord|display=title|name=Peyto Glacier|51|40|41|N|116|32|50|W|region:CA_type:glacier_source:GNS-enwiki}}\n'
+        coordinates = extract_coordinates(line, debug=True)
+        self.assertEqual(coordinates['latitude'], -32)
+        self.assertEqual(coordinates['longitude'], 147)
 
 if __name__ == '__main__':
     unittest.main()

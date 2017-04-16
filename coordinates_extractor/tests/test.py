@@ -148,10 +148,12 @@ class Test(TestCase):
         self.assertEqual(coordinates['longitude'], 147)
 
     def test_st_johns(self):
+        # does the name have to match the name of the page, i.e. title??
+        # should they be able to pass in the name??
         line = '{{Coord|display=title|name=Truro|43|38|23|N|79|25|57.3|W|type:landmark_region:CA-ON}}\n'
-        coordinates = extract_coordinates(line, debug=True)
-        self.assertEqual(coordinates['latitude'], -32)
-        self.assertEqual(coordinates['longitude'], 147)
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 43.63972222222222)
+        self.assertEqual(coordinates['longitude'], -79.43258333333334)
 
     def test_fort_hunter(self):
         line = '|coordinates = {{coord|35.952226|N|121.23065|W}}&lt;ref&gt;{{gnis|2512470|Fort Hunter Liggett}}&lt;/ref&gt;\n'

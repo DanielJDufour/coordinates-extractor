@@ -6,7 +6,7 @@ patterns = {
     "min": "(?P<min>\d{1,3}(?:\.\d{1,15})?)'",
     "sec": "(?P<sec>\d{1,3}(?:\.\d{1,15})?)\"",
     "direction": "(?P<direction>[NWSE])",
-    "ignore": "(?:\|display ?= ?title)?(?:\|name ?= ?[A-Z ]*)?",
+    "ignore": "(?:\|display ?= ?title)?(?:\|name ?= ?[A-Z ,]*)?",
     "number": "-?\d{1,3}(?:\.\d{1,15})?",
     "degrees": "(?P<degrees>\d{1,3}(?:\.\d{1,15})?)",
     "minutes": "(?P<minutes>\d+)",

@@ -137,9 +137,9 @@ class Test(TestCase):
 
     def test_cut_knife(self):
         line = """'{{Coord|display=title|name=Cut Knife, Saskatchewan|52|45|N|109|01|W|region:CA_type:city}}\n'"""
-        coordinates = extract_coordinates(line, debug=True)
-        self.assertEqual(coordinates['latitude'], 34.5299)
-        self.assertEqual(coordinates['longitude'], -83.9871)
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 52.75)
+        self.assertEqual(coordinates['longitude'], -109.01666666666667)
 
     def test_new_south_wales(self):
         line = '|coordinates = {{coord|32|S|147|E}}\n'

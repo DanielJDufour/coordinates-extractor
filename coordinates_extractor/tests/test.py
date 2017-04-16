@@ -163,9 +163,9 @@ class Test(TestCase):
 
     def test_peyto_glacier(self):
         line = '{{Coord|display=title|name=Peyto Glacier|51|40|41|N|116|32|50|W|region:CA_type:glacier_source:GNS-enwiki}}\n'
-        coordinates = extract_coordinates(line, debug=True)
-        self.assertEqual(coordinates['latitude'], -32)
-        self.assertEqual(coordinates['longitude'], 147)
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 51.67805555555555)
+        self.assertEqual(coordinates['longitude'], -116.54722222222222)
 
 if __name__ == '__main__':
     unittest.main()

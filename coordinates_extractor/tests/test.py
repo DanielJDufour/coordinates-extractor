@@ -62,6 +62,72 @@ class Test(TestCase):
         self.assertEqual(coordinates['latitude'], 50.68016)
         self.assertEqual(coordinates['longitude'], 4.41169)
 
+    def test_great_victoria_desert(self):
+        line = '{{Coord|29.1521612833|S|129.259643555|E|source:dewiki_region:AU_scale:7000000_type:landmark|format=dms|display=title}}\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], -29.1521612833)
+        self.assertEqual(coordinates['longitude'], 129.259643555)
+
+    def test_idaho(self):
+        line = '{{Coord|display=title|45|N|114|W|region:US-ID_type:adm1st_scale:3000000}}\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 45)
+        self.assertEqual(coordinates['longitude'], -114)
+
+    def test_paris_texas(self):
+        line = '{{Coord|display=title|33.662508|-95.547692}}\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 33.662508)
+        self.assertEqual(coordinates['longitude'], -95.547692)
+
+    def test_template_of_jerusalem(self):
+        line = '{{Coord|31.77765|N|35.23547|E |format=dms |region:IL_type:landmark_source:placeopedia |display=title}}\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 31.77765)
+        self.assertEqual(coordinates['longitude'], 35.23547)
+
+    def test_geography_of_switzerland(self):
+        line = '|coordinates = 47\xc2\xb0 N 8\xc2\xb0 E\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 47)
+        self.assertEqual(coordinates['longitude'], 8)
+
+    def test_hartford(self):
+        line = '{{Coord|display=title|41.762736| -72.674286}}\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 41.762736)
+        self.assertEqual(coordinates['longitude'], -72.674286)
+
+    def test_beverly_ma(self):
+        line = '{{Coord|42.558&lt;!--4284--&gt;|-70.880&lt;!--0491--&gt;|region:US_type:landmark|display=title}} &lt;!-- see usgs gnis in references --&gt;\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 42.558)
+        self.assertEqual(coordinates['longitude'], -70.880)
+
+    def test_old_firm(self):
+        try:
+            lines = ['| latd1  = 55 | latm1  = 50 | lats1  = 59    | latNS1  = N\n', '| longd1 =  4 | longm1 = 12 | longs1 = 20    | longEW1 = W\n', '| latd2  = 55 | latm2  = 51 | lats2  = 11.54 | latNS2  = N\n', '| longd2 =  4 | longm2 = 18 | longs2 = 33.33 | longEW2 = W\n']
+            print "lines:", lines
+            coordinates = extract_first_coordinate_pair_from_list(lines, debug=False)
+            print "coords:", coordinates
+            self.assertEqual(coordinates['latitude'], 55.849722222222226)
+            self.assertEqual(coordinates['longitude'], 4.205555555555556)
+        except Exception as e:
+            print e
+            raise e
+
+    def test_university_of_saskatchewan(self):
+        line = '|coordinates = |52|8|12|N|106|37|51|W|\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 52.13666666666666)
+        self.assertEqual(coordinates['longitude'], -106.63083333333333)
+
+    def test_dahlonega(self):
+        line = "{{Coord|34.5299|-83.9871|display=title}}The '''Dahlonega Mint''' was a former [[Branch mint|branch]] of the [[United States Mint]] built during the [[Georgia Gold Rush]] to help the miners get their gold [[assayed]] and [[coining (mint)|minted]], without having to travel to the [[Philadelphia Mint]].&lt;ref name=Williams/&gt;{{rp|80\xe2\x80\x9381,105}}  It was located at (34\xc2\xb031.8\xe2\x80\xb2N 83\xc2\xb059.2\xe2\x80\xb2W ) in [[Dahlonega]], [[Lumpkin County, Georgia]]. Coins produced at the Dahlonega Mint bear the &quot;D&quot; [[mint mark]]. That mint mark is used today by the [[Denver Mint]], which opened many years after the Dahlonega Mint closed. All coins from the Dahlonega Mint are gold, in the $1, $2.50, $3, and $5 denominations, and bear dates in the range 1838\xe2\x80\x931861.\n"
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 34.5299)
+        self.assertEqual(coordinates['longitude'], -83.9871)
+
 
 
 

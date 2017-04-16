@@ -157,9 +157,9 @@ class Test(TestCase):
 
     def test_fort_hunter(self):
         line = '|coordinates = {{coord|35.952226|N|121.23065|W}}&lt;ref&gt;{{gnis|2512470|Fort Hunter Liggett}}&lt;/ref&gt;\n'
-        coordinates = extract_coordinates(line, debug=True)
-        self.assertEqual(coordinates['latitude'], -32)
-        self.assertEqual(coordinates['longitude'], 147)
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 35.952226)
+        self.assertEqual(coordinates['longitude'], -121.23065)
 
     def test_peyto_glacier(self):
         line = '{{Coord|display=title|name=Peyto Glacier|51|40|41|N|116|32|50|W|region:CA_type:glacier_source:GNS-enwiki}}\n'

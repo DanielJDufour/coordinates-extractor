@@ -47,7 +47,11 @@ def extract_coordinates_from_line(line, debug=False):
 
         result = {}
 
-        splat = [part.strip() for part in line.split("|")]
+
+        # we do the replace in the line below to handle the case where the
+        # direction comes at the end of the tag like
+        # {{coord|35.952226|N|121.23065|W}}
+        splat = [part.strip() for part in line.replace("}}","|}}").split("|")]
         if debug: print "[coordinates-extractor]: splat is", splat
         if (("N" in splat) + ("S" in splat) + ("E" in splat) + ("W" in splat)) == 2:
             if debug: print "[coordinates-extractor]: at least 2 of the following are in the line: N, S, W, and E"

@@ -173,6 +173,13 @@ class Test(TestCase):
         self.assertEqual(coordinates['latitude'], 53.96391)
         self.assertEqual(coordinates['longitude'], -10.00303)
 
+    def test_church_street(self):
+        line = '| coordinates = {{coord|  51.8128|-2.7147 |display=inline,title}}\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 51.8128)
+        self.assertEqual(coordinates['longitude'], -2.7147)
+
+
 
 
 if __name__ == '__main__':

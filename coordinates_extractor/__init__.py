@@ -119,7 +119,7 @@ def extract_coordinates_from_line(line, debug=False):
 
         # don't do elif beause sometimes have degree sign appearing in text 
         if not result or found_at > 300:
-            pattern = "{{Coords? ?" + patterns['ignore']  + "?\| ?(?P<latitude>" + patterns['number'] + " ?)" + patterns['comment'] + " ?\| ?(?P<longitude>" + patterns['number'] + " ?)" + patterns['comment'] + " ?"
+            pattern = "{{Coords? {0,3}" + patterns['ignore']  + "?\| {0,3}(?P<latitude>" + patterns['number'] + " {0,3})" + patterns['comment'] + " {0,3}\| {0,3}(?P<longitude>" + patterns['number'] + " {0,3})" + patterns['comment'] + " {0,3}"
             if debug: print "pattern:", [pattern]
             mg = search(pattern, line, IGNORECASE)
             if mg:

@@ -143,7 +143,7 @@ class Test(TestCase):
 
     def test_new_south_wales(self):
         line = '|coordinates = {{coord|32|S|147|E}}\n'
-        coordinates = extract_coordinates(line, debug=True)
+        coordinates = extract_coordinates(line, debug=False)
         self.assertEqual(coordinates['latitude'], -32)
         self.assertEqual(coordinates['longitude'], 147)
 

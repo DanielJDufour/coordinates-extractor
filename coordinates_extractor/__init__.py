@@ -47,6 +47,8 @@ def extract_coordinates_from_line(line, debug=False):
 
         result = {}
 
+        found_at = None
+
 
         # we do the replace in the line below to handle the case where the
         # direction comes at the end of the tag like
@@ -112,16 +114,19 @@ def extract_coordinates_from_line(line, debug=False):
                             result['latitude'] = value
                         elif direction in ("W", "E"):
                             result['longitude'] = value
+                        found_at = mg.start()
+                        if debug: print "found_at:", found_at
 
         # don't do elif beause sometimes have degree sign appearing in text 
-        if not result:
+        if not result or found_at > 300:
             pattern = "{{Coords? ?" + patterns['ignore']  + "?\| ?(?P<latitude>" + patterns['number'] + " ?)" + patterns['comment'] + " ?\| ?(?P<longitude>" + patterns['number'] + " ?)" + patterns['comment'] + " ?"
             if debug: print "pattern:", [pattern]
             mg = search(pattern, line, IGNORECASE)
             if mg:
+                if debug: print "found at:", mg.start()
                 groupdict = mg.groupdict()
                 if debug: print "[coordinates-extractor]: groupdict is", groupdict 
-                if "latitude" in groupdict and "longitude" in groupdict:
+                if (found_at is None or found_at - mg.start() > 300) and "latitude" in groupdict and "longitude" in groupdict:
                     result['latitude'] = float(groupdict['latitude'])
                     result['longitude'] = float(groupdict['longitude'])
  

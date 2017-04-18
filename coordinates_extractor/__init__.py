@@ -115,7 +115,9 @@ def extract_coordinates_from_line(line, debug=False):
 
         # don't do elif beause sometimes have degree sign appearing in text 
         if not result:
-            mg = search("{{Coord ?" + patterns['ignore']  + "?\| ?(?P<latitude>" + patterns['number'] + " ?)" + patterns['comment'] + " ?\| ?(?P<longitude>" + patterns['number'] + " ?)" + patterns['comment'] + " ?", line, IGNORECASE)
+            pattern = "{{Coords? ?" + patterns['ignore']  + "?\| ?(?P<latitude>" + patterns['number'] + " ?)" + patterns['comment'] + " ?\| ?(?P<longitude>" + patterns['number'] + " ?)" + patterns['comment'] + " ?"
+            if debug: print "pattern:", [pattern]
+            mg = search(pattern, line, IGNORECASE)
             if mg:
                 groupdict = mg.groupdict()
                 if debug: print "[coordinates-extractor]: groupdict is", groupdict 

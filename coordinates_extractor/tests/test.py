@@ -167,5 +167,13 @@ class Test(TestCase):
         self.assertEqual(coordinates['latitude'], 51.67805555555555)
         self.assertEqual(coordinates['longitude'], -116.54722222222222)
 
+    def test_achill_island(self):
+        line = '| coordinates = {{coords|53.96391|-10.00303|display=it}}\n'
+        coordinates = extract_coordinates(line, debug=True)
+        self.assertEqual(coordinates['latitude'], 53.96391)
+        self.assertEqual(coordinates['longitude'], -10.00303)
+
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -3,8 +3,8 @@ from re import IGNORECASE, search
 patterns = {
     "comment": "(?:&lt;!--\d+--&gt;)?",
     "deg": "(?P<deg>\d{1,3}(?:\.\d{1,15})?)\xc2\xb0",
-    "min": "(?P<min>\d{1,3}(?:\.\d{1,15})?)'",
-    "sec": "(?P<sec>\d{1,3}(?:\.\d{1,15})?)\"",
+    "min": "(?P<min>\d{1,3}(?:\.\d{1,15})?)('|\xe2\x80\xb2)",
+    "sec": "(?P<sec>\d{1,3}(?:\.\d{1,15})?)(\"|\xe2\x80\xb3)",
     "direction": "(?P<direction>[NWSE])",
     "ignore": "(?:\|display ?= ?title)?(?:\|name ?= ?[A-Z ,]*)?",
     "number": "-?\d{1,3}(?:\.\d{1,15})?",

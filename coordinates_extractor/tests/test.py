@@ -131,9 +131,9 @@ class Test(TestCase):
 
     def test_fort_oglethorpe(self):
         line = """'|coordinates = 34\xc2\xb056\xe2\x80\xb258.75\xe2\x80\xb3N 85\xc2\xb015\xe2\x80\xb210.66\xe2\x80\xb3W\n'"""
-        coordinates = extract_coordinates(line, debug=True)
-        self.assertEqual(coordinates['latitude'], 34.5299)
-        self.assertEqual(coordinates['longitude'], -83.9871)
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 34.94965277777777)
+        self.assertEqual(coordinates['longitude'], -85.2529611111111)
 
     def test_cut_knife(self):
         line = """'{{Coord|display=title|name=Cut Knife, Saskatchewan|52|45|N|109|01|W|region:CA_type:city}}\n'"""
@@ -169,7 +169,7 @@ class Test(TestCase):
 
     def test_achill_island(self):
         line = '| coordinates = {{coords|53.96391|-10.00303|display=it}}\n'
-        coordinates = extract_coordinates(line, debug=True)
+        coordinates = extract_coordinates(line, debug=False)
         self.assertEqual(coordinates['latitude'], 53.96391)
         self.assertEqual(coordinates['longitude'], -10.00303)
 

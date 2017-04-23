@@ -1,4 +1,4 @@
-from re import IGNORECASE, search
+from re import IGNORECASE, search, sub
 
 patterns = {
     "comment": "(?:&lt;!--\d+--&gt;)?",
@@ -48,6 +48,11 @@ def extract_coordinates_from_line(line, debug=False):
         result = {}
 
         found_at = None
+
+
+        #remove comments
+        line = line.replace("&lt;!--", "<!--").replace("--&gt;","-->")
+        line = sub("<!--(.*?)-->", "", line) 
 
 
         # we do the replace in the line below to handle the case where the
@@ -119,8 +124,9 @@ def extract_coordinates_from_line(line, debug=False):
 
         # don't do elif beause sometimes have degree sign appearing in text 
         if not result or found_at > 300:
+            if debug: print "no result so far, so use basic pattern"
             pattern = "{{Coords? {0,3}" + patterns['ignore']  + "?\| {0,3}(?P<latitude>" + patterns['number'] + " {0,3})" + patterns['comment'] + " {0,3}\| {0,3}(?P<longitude>" + patterns['number'] + " {0,3})" + patterns['comment'] + " {0,3}"
-            if debug: print "pattern:", [pattern]
+            if debug: print "pattern = '" + pattern + "'"
             mg = search(pattern, line, IGNORECASE)
             if mg:
                 if debug: print "found at:", mg.start()

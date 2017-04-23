@@ -179,6 +179,14 @@ class Test(TestCase):
         self.assertEqual(coordinates['latitude'], 51.8128)
         self.assertEqual(coordinates['longitude'], -2.7147)
 
+    def test_wrigley_field(self):
+        line = '| coordinates         = {{Coord|41.948&lt;!--|56|54--&gt;|N|87.656&lt;!--|39|20--&gt;|W|type:landmark|display=inline,title}}\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 41.948)
+        self.assertEqual(coordinates['longitude'], -87.656)
+
+
+
 
 
 

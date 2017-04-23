@@ -186,7 +186,14 @@ class Test(TestCase):
         self.assertEqual(coordinates['longitude'], -87.656)
 
 
+    def test_phoolan_devi(self):
+        line = '| coordinates = 28.6139\xc2\xb0 N, 77.2089\xc2\xb0 E\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 28.6139)
+        self.assertEqual(coordinates['longitude'], 77.2089)
 
+
+ 
 
 
 

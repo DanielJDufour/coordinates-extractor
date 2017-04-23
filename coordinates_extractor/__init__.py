@@ -101,7 +101,7 @@ def extract_coordinates_from_line(line, debug=False):
  
         elif "\xc2\xb0" in line:
             if debug: print "[coordinates-extractor]: \xc2\xb0 in line"
-            search_pattern = patterns['deg1'] +  " ?(?:" + patterns['min1'] + ")? ?(?:" + patterns['sec1'] + ")? ?" + patterns['direction1'] + " " + patterns['deg2'] + " ?(?:" + patterns['min2'] + ")? ?(?:" + patterns['sec2'] + ")? ?" + patterns['direction2']
+            search_pattern = patterns['deg1'] +  " ?(?:" + patterns['min1'] + ")? ?(?:" + patterns['sec1'] + ")? ?" + patterns['direction1'] + ",? " + patterns['deg2'] + " ?(?:" + patterns['min2'] + ")? ?(?:" + patterns['sec2'] + ")? ?" + patterns['direction2']
             if debug: print "[coordinates-extractor]: search_pattern is", search_pattern
             mg = search(search_pattern, line, IGNORECASE)
             if debug: print "[coordinates-extractor]: mg is", mg

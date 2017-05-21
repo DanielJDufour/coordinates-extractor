@@ -1,4 +1,4 @@
-from re import IGNORECASE, search
+from re import IGNORECASE, search, sub
 
 patterns = {
     "comment": "(?:&lt;!--\d+--&gt;)?",
@@ -50,6 +50,11 @@ def extract_coordinates_from_line(line, debug=False):
         found_at = None
 
 
+        #remove comments
+        line = line.replace("&lt;!--", "<!--").replace("--&gt;","-->")
+        line = sub("<!--(.*?)-->", "", line) 
+
+
         # we do the replace in the line below to handle the case where the
         # direction comes at the end of the tag like
         # {{coord|35.952226|N|121.23065|W}}
@@ -98,7 +103,7 @@ def extract_coordinates_from_line(line, debug=False):
  
         elif "\xc2\xb0" in line:
             if debug: print "[coordinates-extractor]: \xc2\xb0 in line"
-            search_pattern = patterns['deg1'] +  " ?(?:" + patterns['min1'] + ")? ?(?:" + patterns['sec1'] + ")? ?" + patterns['direction1'] + " " + patterns['deg2'] + " ?(?:" + patterns['min2'] + ")? ?(?:" + patterns['sec2'] + ")? ?" + patterns['direction2']
+            search_pattern = patterns['deg1'] +  " ?(?:" + patterns['min1'] + ")? ?(?:" + patterns['sec1'] + ")? ?" + patterns['direction1'] + ",? " + patterns['deg2'] + " ?(?:" + patterns['min2'] + ")? ?(?:" + patterns['sec2'] + ")? ?" + patterns['direction2']
             if debug: print "[coordinates-extractor]: search_pattern is", search_pattern
             mg = search(search_pattern, line, IGNORECASE)
             if debug: print "[coordinates-extractor]: mg is", mg
@@ -121,8 +126,9 @@ def extract_coordinates_from_line(line, debug=False):
 
         # don't do elif beause sometimes have degree sign appearing in text 
         if not result or found_at > 300:
+            if debug: print "no result so far, so use basic pattern"
             pattern = "{{Coords? {0,3}" + patterns['ignore']  + "?\| {0,3}(?P<latitude>" + patterns['number'] + " {0,3})" + patterns['comment'] + " {0,3}\| {0,3}(?P<longitude>" + patterns['number'] + " {0,3})" + patterns['comment'] + " {0,3}"
-            if debug: print "pattern:", [pattern]
+            if debug: print "pattern = '" + pattern + "'"
             mg = search(pattern, line, IGNORECASE)
             if mg:
                 if debug: print "found at:", mg.start()

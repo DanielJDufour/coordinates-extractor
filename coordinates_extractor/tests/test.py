@@ -179,6 +179,21 @@ class Test(TestCase):
         self.assertEqual(coordinates['latitude'], 51.8128)
         self.assertEqual(coordinates['longitude'], -2.7147)
 
+    def test_wrigley_field(self):
+        line = '| coordinates         = {{Coord|41.948&lt;!--|56|54--&gt;|N|87.656&lt;!--|39|20--&gt;|W|type:landmark|display=inline,title}}\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 41.948)
+        self.assertEqual(coordinates['longitude'], -87.656)
+
+
+    def test_phoolan_devi(self):
+        line = '| coordinates = 28.6139\xc2\xb0 N, 77.2089\xc2\xb0 E\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 28.6139)
+        self.assertEqual(coordinates['longitude'], 77.2089)
+
+
+ 
 
     def test_arabic_piaseczno(self):
         line = '| latd == 52 | latm = 4 | lats = 0 | latNS = N | longd = 21 | longm = 1 | longs = 0 | longEW == E\n'

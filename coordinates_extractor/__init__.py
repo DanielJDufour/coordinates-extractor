@@ -188,8 +188,10 @@ def extract_first_coordinate_pair_from_list(lst, debug=False):
             temp_result = extract_coordinates_from_line(element, debug=debug)
             for key in ["latitude", "longitude"]:
                 if key not in result and key in temp_result:
-                    result[key] = temp_result[key]
+                    if temp_result[key] not in [None, ""]:
+                        result[key] = temp_result[key]
 
+        if debug: print "[coordinates-extractor.extract_first_coordinate_pair_from_list] finished with", result
         return result
 
     except Exception as e:

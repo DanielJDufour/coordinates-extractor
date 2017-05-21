@@ -207,9 +207,15 @@ class Test(TestCase):
 
     def test_arabic_sinarades(self):
         line = '{{Coordinate |NS=39/33/52/N |EW=19/50/46/E |type=city |pop=1216 |region=GR|display=title}}\n' 
-        coordinates = extract_coordinates(line, debug=True)
+        coordinates = extract_coordinates(line, debug=False)
         self.assertEqual(coordinates['latitude'], 39.56444444444444)
         self.assertEqual(coordinates['longitude'], 19.84611111111111)
+
+    def test_coord_lines(self):
+        coord_lines = ['| latd                  =\n', '| longd                 =\n', '| latd  = 36 | latm  = 17 | lats  = 59 | latNS  = N\n', '| longd = 43  | longm = 22 | longs = 24 | longEW = E\n', '| latd  = 36 | latm  = 17 | lats  = 59 | latNS  = N\n', '| longd = 43  | longm = 22 | longs = 24 | longEW = E\n']
+        coordinates = extract_first_coordinate_pair_from_list(coord_lines, debug=False)
+        self.assertEqual(coordinates['latitude'], 36.29972222222222)
+        self.assertEqual(coordinates['longitude'], 43.373333333333335)
 
 
 if __name__ == '__main__':

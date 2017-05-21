@@ -205,8 +205,11 @@ class Test(TestCase):
         self.assertEqual(coordinates['latitude'], 39.2866641)
         self.assertEqual(coordinates['longitude'], 26.0179174)
 
- 
-
+    def test_arabic_sinarades(self):
+        line = '{{Coordinate |NS=39/33/52/N |EW=19/50/46/E |type=city |pop=1216 |region=GR|display=title}}\n' 
+        coordinates = extract_coordinates(line, debug=True)
+        self.assertEqual(coordinates['latitude'], 39.56444444444444)
+        self.assertEqual(coordinates['longitude'], 19.84611111111111)
 
 
 if __name__ == '__main__':

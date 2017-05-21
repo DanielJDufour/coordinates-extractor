@@ -124,16 +124,38 @@ def extract_coordinates_from_line(line, debug=False):
                         found_at = mg.start()
                         if debug: print "found_at:", found_at
 
-        #{{Coordinate|article=/|map=right|maplevel=adm1st|NS=39.2866641|EW=26.0179174|type=landmark|region=GR-L|display=title}}0
-        splat_twice = [string.split("=") for string in splat]
-        splat_twice_keys = [tup[0] for tup in splat_twice]
-        if debug: print "splat_twice_keys:", splat_twice_keys
-        if "NS" in splat_twice_keys and "EW" in splat_twice_keys:
-            try:
-                result['latitude'] = float(next(tup[1] for tup in splat_twice if tup[0] == "NS"))
-                result['longitude'] = float(next(tup[1] for tup in splat_twice if tup[0] == "EW"))
-            except Exception as e:
-                print e
+        elif "NS=" in line and "EW=" in line:
+
+            #'{{Coordinate |NS=39/33/52/N |EW=19/50/46/E |type=city |pop=1216 |region=GR|display=title}}\n'
+            ns_match = search("NS=" + patterns["degrees"] + "/" + patterns['minutes'] + "/" + patterns["seconds"] + "/" + patterns["direction"], line, IGNORECASE)
+            ew_match = search("EW=" + patterns["degrees"] + "/" + patterns['minutes'] + "/" + patterns["seconds"] + "/" + patterns["direction"], line, IGNORECASE)
+            if ns_match and ew_match:
+
+                ns_groupdict = ns_match.groupdict()
+                ns_degrees = ns_groupdict["degrees"]
+                ns_minutes = ns_groupdict.get("minutes", 0)
+                ns_seconds = ns_groupdict.get("seconds", 0)
+                ns_direction = ns_groupdict.get("direction", "N")
+                result['latitude'] = dms2dd(ns_degrees, ns_minutes, ns_seconds, ns_direction, debug=debug)
+
+                ew_groupdict = ew_match.groupdict()
+                ew_degrees = ew_groupdict["degrees"]
+                ew_minutes = ew_groupdict.get("minutes", 0)
+                ew_seconds = ew_groupdict.get("seconds", 0)
+                ew_direction = ew_groupdict.get("direction", "N")
+                result['longitude'] = dms2dd(ew_degrees, ew_minutes, ew_seconds, ew_direction, debug=debug)
+
+            else:
+                #{{Coordinate|article=/|map=right|maplevel=adm1st|NS=39.2866641|EW=26.0179174|type=landmark|region=GR-L|display=title}}0
+                splat_twice = [string.split("=") for string in splat]
+                splat_twice_keys = [tup[0] for tup in splat_twice]
+                if debug: print "splat_twice_keys:", splat_twice_keys
+                if "NS" in splat_twice_keys and "EW" in splat_twice_keys:
+                    try:
+                        result['latitude'] = float(next(tup[1] for tup in splat_twice if tup[0] == "NS"))
+                        result['longitude'] = float(next(tup[1] for tup in splat_twice if tup[0] == "EW"))
+                    except Exception as e:
+                        print e
 
         # don't do elif beause sometimes have degree sign appearing in text 
         if not result or found_at > 300:

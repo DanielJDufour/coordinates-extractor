@@ -124,6 +124,17 @@ def extract_coordinates_from_line(line, debug=False):
                         found_at = mg.start()
                         if debug: print "found_at:", found_at
 
+        #{{Coordinate|article=/|map=right|maplevel=adm1st|NS=39.2866641|EW=26.0179174|type=landmark|region=GR-L|display=title}}0
+        splat_twice = [string.split("=") for string in splat]
+        splat_twice_keys = [tup[0] for tup in splat_twice]
+        if debug: print "splat_twice_keys:", splat_twice_keys
+        if "NS" in splat_twice_keys and "EW" in splat_twice_keys:
+            try:
+                result['latitude'] = float(next(tup[1] for tup in splat_twice if tup[0] == "NS"))
+                result['longitude'] = float(next(tup[1] for tup in splat_twice if tup[0] == "EW"))
+            except Exception as e:
+                print e
+
         # don't do elif beause sometimes have degree sign appearing in text 
         if not result or found_at > 300:
             if debug: print "no result so far, so use basic pattern"

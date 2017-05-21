@@ -193,15 +193,19 @@ class Test(TestCase):
         self.assertEqual(coordinates['longitude'], 77.2089)
 
 
- 
-
     def test_arabic_piaseczno(self):
         line = '| latd == 52 | latm = 4 | lats = 0 | latNS = N | longd = 21 | longm = 1 | longs = 0 | longEW == E\n'
-        coordinates = extract_coordinates(line, debug=True)
+        coordinates = extract_coordinates(line, debug=False)
         self.assertEqual(coordinates['latitude'], 52.06666666666667)
         self.assertEqual(coordinates['longitude'], 21.016666666666666)
 
-       
+    def test_antissa(self):
+        line = '{{Coordinate|article=/|map=right|maplevel=adm1st|NS=39.2866641|EW=26.0179174|type=landmark|region=GR-L|display=title}}\n'
+        coordinates = extract_coordinates(line, debug=False)
+        self.assertEqual(coordinates['latitude'], 39.2866641)
+        self.assertEqual(coordinates['longitude'], 26.0179174)
+
+ 
 
 
 

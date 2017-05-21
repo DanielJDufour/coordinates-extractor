@@ -80,19 +80,21 @@ def extract_coordinates_from_line(line, debug=False):
 
             # converts '| latd  = 34  | latm  = 55 | lats  = 44.4\n'
             # to {'latm': '55', 'latd': '34', 'lats': '44.4'}
-            d = dict([[b.strip() for b in a.split("=")] for a in line.split("|") if a])
+            d = dict([[b.strip() for b in a.replace("==","=").split("=")] for a in line.split("|") if a])
             if debug: print "[coordinates-extractor]: d is", d
             if d:
                 if "latd" in d or "latd1" in d or "latd2" in d:
                     latd = d.get("latd", None) or d.get("latd1", None) or d.get("latd2", None)
                     latm = d.get("latm", None) or d.get("latm1", None) or d.get("latm2", None) or 0
                     lats = d.get("lats", None) or d.get("lats1", None) or d.get("lats2", None) or 0
-                    result['latitude'] = dms2dd(latd, latm, lats, "N")
+                    lat_direction = d.get("latNS", None) or "N"
+                    result['latitude'] = dms2dd(latd, latm, lats, lat_direction)
                 if "longd" in d or "longd1" in d or "longd2" in d:
                     longd = d.get("longd", None) or d.get("longd1", None) or d.get("longd2", None)
                     longm = d.get("longm", None) or d.get("longm1", None) or d.get("longm2", None) or 0
                     longs = d.get("longs", None) or d.get("longs1", None) or d.get("longs2", None) or 0
-                    result['longitude'] = dms2dd(longd, longm, longs, "N")
+                    long_direction = d.get("longEW", None) or "E"
+                    result['longitude'] = dms2dd(longd, longm, longs, long_direction)
  
         elif "\xc2\xb0" in line:
             if debug: print "[coordinates-extractor]: \xc2\xb0 in line"

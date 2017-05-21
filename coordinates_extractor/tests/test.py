@@ -180,6 +180,14 @@ class Test(TestCase):
         self.assertEqual(coordinates['longitude'], -2.7147)
 
 
+    def test_arabic_piaseczno(self):
+        line = '| latd == 52 | latm = 4 | lats = 0 | latNS = N | longd = 21 | longm = 1 | longs = 0 | longEW == E\n'
+        coordinates = extract_coordinates(line, debug=True)
+        self.assertEqual(coordinates['latitude'], 52.06666666666667)
+        self.assertEqual(coordinates['longitude'], 21.016666666666666)
+
+       
+
 
 
 if __name__ == '__main__':
